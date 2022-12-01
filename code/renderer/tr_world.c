@@ -379,44 +379,12 @@ static void R_AddRaytacedWorldSurface(msurface_t* surface)
 	int lightRange = surface->shader->surfaceLightRadius;
 	vec3_t lightColor = { 1, 1, 1 };
 
-	if (strstr(surface->shader->name, "light")) {
-		lightColor[0] = 233.0f / 255.0f;
-		lightColor[1] = 233.0f / 255.0f;
-		lightColor[2] = 125.0f / 255.0f;
-	}
-	else if (strstr(surface->shader->name, "flame1_hell")) {
-		lightColor[0] = 226.0f / 255.0f;
-		lightColor[1] = 184.0f / 255.0f;
-		lightColor[2] = 34.0f / 255.0f;
-	}
-	else if (strstr(surface->shader->name, "flame")) {
-		lightColor[0] = 226.0f / 255.0f;
-		lightColor[1] = 184.0f / 255.0f;
-		lightColor[2] = 34.0f / 255.0f;
-	}
-	else if (strstr(surface->shader->name, "lava")) {
-		lightColor[0] = 128.0f / 255.0f;
-		lightColor[1] = 0.0f / 255.0f;
-		lightColor[2] = 0.0f / 255.0f;
-	}
-	else if (strstr(surface->shader->name, "tim_hell")) {
-		lightColor[0] = 128.0f / 255.0f;
-		lightColor[1] = 50.0f / 255.0f;
-		lightColor[2] = 50.0f / 255.0f;
-	}
-	else if (strstr(surface->shader->name, "sky")) {
-		lightColor[0] = 215.0f / 255.0f;
-		lightColor[1] = 184.0f / 255.0f;
-		lightColor[2] = 120.0f / 255.0f;
-	}
-	else if (strstr(surface->shader->name, "skies")) {
-		lightColor[0] = 215.0f / 255.0f;
-		lightColor[1] = 184.0f / 255.0f;
-		lightColor[2] = 120.0f / 255.0f;
-	}
-
 	if (lightRange == 0)
 		return;
+
+	lightColor[0] = surface->shader->shaderAverageColor[0] / 255.0f;
+	lightColor[1] = surface->shader->shaderAverageColor[1] / 255.0f;
+	lightColor[2] = surface->shader->shaderAverageColor[2] / 255.0f;
 
 	srfTriangles_t* tri = (srfTriangles_t*)surface->data;
 	if (tri == NULL) {

@@ -584,6 +584,28 @@ byte *R_ScalePowerOfTwo(byte* data, int width, int height, int *outWidth, int *o
 
 	return data;
 }
+/*
+===============
+CalculateMidColorsForImage
+===============
+*/
+static void CalculateMidColorsForImage(byte* buffer, int width, int height, int *coloravg)
+{
+	memset(coloravg, 0, sizeof(coloravg));
+
+	for (int i = 0; i < width * height; i++)
+	{
+		coloravg[0] += buffer[0];
+		coloravg[1] += buffer[1];
+		coloravg[2] += buffer[2];
+
+		buffer += 4;
+	}
+
+	coloravg[0] /= width * height;
+	coloravg[1] /= width * height;
+	coloravg[2] /= width * height;
+}
 
 /*
 ===============
@@ -598,7 +620,7 @@ static void Upload32( const char *name, int textureId, unsigned *data,
 						  qboolean picmip, 
 							qboolean lightMap,
 						  int *format, 
-						  int *pUploadWidth, int *pUploadHeight )
+						  int *pUploadWidth, int *pUploadHeight, int* coloravg)
 {
 	int			samples;
 	unsigned	*scaledBuffer = NULL;
@@ -790,6 +812,8 @@ static void Upload32( const char *name, int textureId, unsigned *data,
 	//}	
 done:
 	GL_Upload32(textureId, data, width, height, qfalse, qfalse);
+	CalculateMidColorsForImage(data, width, height, coloravg);
+
 	//GL_RegisterTexture(name, scaled_width, scaled_height, scaledBuffer);
 
 	if (mipmap)
@@ -868,7 +892,7 @@ image_t *R_CreateImage( const char *name, const byte *pic, int width, int height
 								isLightmap,
 								&image->internalFormat,
 								&image->uploadWidth,
-								&image->uploadHeight );
+								&image->uploadHeight, &image->imageAverageColor[0]);
 
 	image->cpu_image_buffer = (byte *)ri.Hunk_Alloc(image->width * image->height * 4, h_low);
 	memcpy(image->cpu_image_buffer, pic, image->width * image->height * 4);

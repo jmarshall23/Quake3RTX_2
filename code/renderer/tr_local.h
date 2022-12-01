@@ -111,6 +111,8 @@ typedef struct image_s {
 	int			wrapClampMode;		// GL_CLAMP or GL_REPEAT
 	byte*		cpu_image_buffer;
 
+	int			imageAverageColor[3];
+
 	struct image_s*	next;
 } image_t;
 
@@ -410,6 +412,8 @@ typedef struct shader_s {
 	float		atlas_y;
 	float		atlas_width;
 	float		atlas_height;
+
+	int			shaderAverageColor[3];
 
 	int			numDeforms;
 	deformStage_t	deforms[MAX_SHADER_DEFORMS];

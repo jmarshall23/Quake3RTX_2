@@ -1448,7 +1448,7 @@ static qboolean ParseShader( char **text )
 		else if (!Q_stricmp(token, "q3map_surfacelight"))
 		{
 			token = COM_ParseExt(text, qfalse);
-			shader.surfaceLightRadius = (atoi(token) * 7500) * (1.0 / 8000);
+			shader.surfaceLightRadius = atoi(token);
 			continue;
 		}
 
@@ -1754,6 +1754,8 @@ static qboolean CollapseMultitexture( void ) {
 				if (stages[i].bundle[0].image[0] == NULL || stages[i].bundle[0].image[0]->cpu_image_buffer == NULL)
 					continue;
 
+				memcpy(shader.shaderAverageColor, stages[i].bundle[0].image[0]->imageAverageColor, sizeof(shader.shaderAverageColor));
+
 				byte* scaled_buffer = R_ScalePowerOfTwo(stages[i].bundle[0].image[0]->cpu_image_buffer, stages[i].bundle[0].image[0]->width, stages[i].bundle[0].image[0]->height, &scaled_width, &scaled_height);
 
 				image_program_width = scaled_width;
@@ -1796,6 +1798,8 @@ static qboolean CollapseMultitexture( void ) {
 			Com_Printf("Found program %s\n", shader.name);
 		}
 
+
+
 		free(image_program_buffer);
 	}
 	else
@@ -1809,6 +1813,8 @@ static qboolean CollapseMultitexture( void ) {
 			if (stages[i].active && strlen(stages[i].bundle[0].imageName[0]) > 0 && (stages[i].bundle[0].tcGen == TCGEN_TEXTURE || stages[i].bundle[0].tcGen == TCGEN_BAD)) {
 				if (numLitStages == 0)
 				{
+					memcpy(shader.shaderAverageColor, stages[i].bundle[0].image[0]->imageAverageColor, sizeof(shader.shaderAverageColor));
+
 					int scaled_width, scaled_height;
 					byte* scaled_buffer = R_ScalePowerOfTwo(stages[i].bundle[0].image[0]->cpu_image_buffer, stages[i].bundle[0].image[0]->width, stages[i].bundle[0].image[0]->height, &scaled_width, &scaled_height);
 
