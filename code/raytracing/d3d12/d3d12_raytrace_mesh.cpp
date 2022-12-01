@@ -300,7 +300,7 @@ void GL_LoadBottomLevelAccelStruct(dxrMesh_t* mesh, msurface_t* surfaces, int nu
 			continue;
 		}
 
-		if (strstr(fa->shader->name, "skies") || strstr(fa->shader->name, "light") || strstr(fa->shader->name, "lava")) {
+		if (fa->shader->surfaceLightRadius > 0) {
 			materialInfo = 2;
 		}
 
