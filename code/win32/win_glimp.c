@@ -414,7 +414,7 @@ static qboolean GLW_CreateWindow( const char *drivername, int width, int height,
 		g_wv.hWnd = CreateWindowEx (
 			 exstyle, 
 			 WINDOW_CLASS_NAME,
-			 "Quake 3: Arena",
+			 Q3_TITLE,
 			 stylebits,
 			 x, y, w, h,
 			 NULL,
