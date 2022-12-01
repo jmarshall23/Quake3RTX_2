@@ -340,6 +340,28 @@ void R_AddBrushModelSurfaces ( trRefEntity_t *ent ) {
 
 
 /*
+=============
+SurfaceArea
+=============
+*/
+vec_t	SurfaceArea(srfTriangles_t* w)
+{
+	int		i;
+	vec3_t	d1, d2, cross;
+	vec_t	total;
+
+	total = 0;
+	for (i = 2; i < w->numVerts; i++)
+	{
+		VectorSubtract(w->verts[i - 1].xyz, w->verts[0].xyz, d1);
+		VectorSubtract(w->verts[i].xyz, w->verts[0].xyz, d2);
+		CrossProduct(d1, d2, cross);
+		total += 0.5 * VectorLength(cross);
+	}
+	return total;
+}
+
+/*
 =============================================================
 
 	WORLD MODEL
@@ -417,10 +439,10 @@ static void R_AddRaytacedWorldSurface(msurface_t* surface)
 
 	vec4_t plane_normal;
 
-	plane_normal[0] = surface->plane.normal[0];
+	plane_normal[0] = SurfaceArea(tri);
 	plane_normal[1] = surface->plane.normal[1];
 	plane_normal[2] = surface->plane.normal[2];
-	plane_normal[3] = surface->plane.dist;
+	plane_normal[3] = SurfaceArea(tri);
 
 	GL_RegisterWorldAreaLight(plane_normal, mins, maxs, lightStyle, lightRange, lightColor[0], lightColor[1], lightColor[2]);
 }

@@ -502,10 +502,10 @@ int sideOfPlane(float3 p, float3 pc, float3 pn){
 		//	if (angle < 0)
 		//		continue;
 
-			falloff = (-(lightInfo[i].origin_radius.w * 0.25) / (lightDistance * lightDistance));
-
+			float photons = (-lightInfo[i].origin_radius.w * 0.25) * (plane_info.x * 0.001);
+			falloff = (photons / (lightDistance * lightDistance));
 			falloff = falloff - 0.005;
-						
+
 			if(falloff > 0)
 			{
 				falloff += 0.005;
