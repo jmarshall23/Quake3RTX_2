@@ -489,18 +489,6 @@ int sideOfPlane(float3 p, float3 pc, float3 pn){
 			float lightDistance = length(centerLightDir);
 			
 			float falloff = 0;
-			
-			//if(BTriVertex[vertId + 0].st.z == 0) {
-			//	falloff = attenuation_arealight(-lightInfo[i].origin_radius.w, 1.0, lightDistance, normal, normalize(areaLightDir)) - 0.05;  			
-			//}
-			//else {
-			//	falloff = attenuation_arealight(-lightInfo[i].origin_radius.w, 1.0, lightDistance, normal, normalize(centerLightDir)) - 0.05;  			
-			//}
-
-		//	float angle = dot(normalize(v), plane_info.xyz);
-		//	angle += 0.0005;
-		//	if (angle < 0)
-		//		continue;
 
 			float photons = (-lightInfo[i].origin_radius.w * 0.25) * (plane_info.x * 0.001);
 			falloff = (photons / (lightDistance * lightDistance));

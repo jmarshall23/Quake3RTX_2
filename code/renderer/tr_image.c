@@ -757,7 +757,7 @@ static void Upload32( const char *name, int textureId, unsigned *data,
 		Com_Memcpy( scaledBuffer, data, width * height * 4 );
 	}
 
-	R_LightScaleTexture (scaledBuffer, scaled_width, scaled_height, !mipmap );
+	//R_LightScaleTexture (scaledBuffer, scaled_width, scaled_height, !mipmap );
 
 	*pUploadWidth = scaled_width;
 	*pUploadHeight = scaled_height;
