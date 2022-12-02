@@ -292,6 +292,12 @@ void GL_LoadBottomLevelAccelStruct(dxrMesh_t* mesh, msurface_t* surfaces, int nu
 		if (fa->shader->defaultShader)
 			continue;
 
+		// Miss shader will take care of this. 
+		if (fa->shader->surfaceFlags & SURF_SKY) {
+			GL_FindMegaTile(fa->shader->name, sky_map_x, sky_map_y, sky_map_w, sky_map_h);
+			continue;
+		}
+
 		if (strstr(fa->shader->name, "fog")) {
 			continue;
 		}
@@ -818,7 +824,7 @@ void GL_FinishVertexBufferAllocation(void) {
 		dxrMesh_t* mesh = dxrMeshList[i];
 
 		nv_helpers_dx12::BottomLevelASGenerator bottomLevelAS;
-		bottomLevelAS.AddVertexBuffer(m_vertexBuffer.Get(), mesh->startSceneVertex * sizeof(dxrVertex_t), mesh->numSceneVertexes, sizeof(dxrVertex_t), NULL, 0, !mesh->alphaSurface);
+		bottomLevelAS.AddVertexBuffer(m_vertexBuffer.Get(), mesh->startSceneVertex * sizeof(dxrVertex_t), mesh->numSceneVertexes, sizeof(dxrVertex_t), NULL, 0, true);
 
 		// Adding all vertex buffers and not transforming their position.
 		//for (const auto& buffer : vVertexBuffers) {
