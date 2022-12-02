@@ -442,14 +442,14 @@ int sideOfPlane(float3 p, float3 pc, float3 pn){
 			float falloff = attenuation(lightInfo[i].origin_radius.w, 1.0, lightDistance, normal, normalize(centerLightDir));
 			float attentype = lightInfo[i].light_color.w;
 
-			falloff = falloff - 0.1;  
-			
-			falloff = clamp(falloff, 0.0, 1.0);
-			
+			falloff = falloff - 0.01;  
+
 			//bool isShadowed = dot(normal, centerLightDir) < 0;	  
 			//if(!isShadowed)
 			if(falloff > 0)
 			{
+					falloff = falloff + 0.01;
+					falloff *= 0.5;
 					if(!IsLightShadowed(lightPos, normalize(shadowLightDir), shadowDistance, normal))
 					{
 						float3 V = viewPos - worldOrigin;
@@ -490,13 +490,13 @@ int sideOfPlane(float3 p, float3 pc, float3 pn){
 			
 			float falloff = 0;
 
-			float photons = (-lightInfo[i].origin_radius.w * 0.25) * (plane_info.x * 0.001);
+			float photons = (plane_info.x * 0.125) + (-lightInfo[i].origin_radius.w * 0.25);
 			falloff = (photons / (lightDistance * lightDistance));
-			falloff = falloff - 0.005;
+			falloff = falloff - 0.01;
 
 			if(falloff > 0)
 			{
-				falloff += 0.005;
+				falloff += 0.01;
 
 				if(!IsLightShadowed(worldOrigin + (normal * 2), normalize(centerLightDir), lightDistance, normal))
 				{
@@ -516,7 +516,8 @@ int sideOfPlane(float3 p, float3 pc, float3 pn){
 			}
 		}
 	}
-	ndotl += 0.05;
+
+	ndotl += 0.01;
   }
   else
   {
