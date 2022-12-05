@@ -69,6 +69,8 @@ ComPtr< ID3D12Resource > m_cameraBuffer;
 ComPtr< ID3D12DescriptorHeap > m_constHeap;
 uint32_t m_cameraBufferSize = 0;
 
+HWND g_hwnd;
+
 bool raytracingDataInit = false;
 
 void GL_WaitForPreviousFrame(void) 
@@ -384,6 +386,8 @@ void GL_Init(HWND hwnd, HINSTANCE hinstance, int width, int height)
 
 	Com_Printf("------ GL_Init -------\n");
 
+	g_hwnd = hwnd;
+
 #if defined(_DEBUG)
 	// Enable the debug layer (requires the Graphics Tools "optional feature").
 	// NOTE: Enabling the debug layer after device creation will invalidate the active device.
@@ -668,7 +672,7 @@ void GL_EndRendering(void)
 	m_commandQueue->ExecuteCommandLists(_countof(ppCommandLists), ppCommandLists);
 
 	// Present the frame.
-	ThrowIfFailed(m_swapChain->Present(0, 0));
+	ThrowIfFailed(m_swapChain->Present(1, 0));
 }
 
 void GL_Bind(int texnum)
@@ -805,6 +809,7 @@ void GL_FinishDXRLoading(void)
 		// Compile the SBT from the shader and parameters info
 		m_sbtHelper.Generate(m_sbtStorage.Get(), m_rtStateObjectProps.Get());
 	}
+
 	raytracingDataInit = true;
 }
 

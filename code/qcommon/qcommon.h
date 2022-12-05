@@ -724,6 +724,7 @@ extern	cvar_t	*com_blood;
 extern	cvar_t	*com_buildScript;		// for building release pak files
 extern	cvar_t	*com_journal;
 extern	cvar_t	*com_cameraMode;
+extern  cvar_t  *com_showfps;
 
 // both client and server must agree to pause
 extern	cvar_t	*cl_paused;
@@ -831,6 +832,13 @@ void CL_Shutdown( void );
 void CL_Frame( int msec );
 qboolean CL_GameCommand( void );
 void CL_KeyEvent (int key, qboolean down, unsigned time);
+
+// ImGui support.
+void CL_InitImGui(void* window_handle, void* graphicsDevice, void *graphicsDeviceDescriptorHeap);
+void CL_RenderImGuiFrame(void);
+void CL_FinalRenderImGui(void* commandList);
+void CL_ImGuiKeyInput(int keyDown, unsigned int key);
+void CL_ImGuiMouseInput(int buttonDown, int key);
 
 void CL_CharEvent( int key );
 // char events are for field typing, not game control
@@ -1054,6 +1062,8 @@ void	Huff_offsetReceive (node_t *node, int *ch, byte *fin, int *offset);
 void	Huff_offsetTransmit (huff_t *huff, int ch, byte *fout, int *offset);
 void	Huff_putBit( int bit, byte *fout, int *offset);
 int		Huff_getBit( byte *fout, int *offset);
+
+void	Imgui_Printf(const char* v);
 
 extern huffman_t clientHuffTables;
 

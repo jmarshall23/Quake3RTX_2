@@ -78,6 +78,8 @@ cvar_t	*com_introPlayed;
 cvar_t	*cl_paused;
 cvar_t	*sv_paused;
 cvar_t	*com_cameraMode;
+cvar_t  *com_showfps;
+
 #if defined(_WIN32) && defined(_DEBUG)
 cvar_t	*com_noErrorInterrupt;
 #endif
@@ -2436,6 +2438,8 @@ void Com_Init( char *commandLine ) {
 	com_speeds = Cvar_Get ("com_speeds", "0", 0);
 	com_timedemo = Cvar_Get ("timedemo", "0", CVAR_CHEAT);
 	com_cameraMode = Cvar_Get ("com_cameraMode", "0", CVAR_CHEAT);
+
+	com_showfps = Cvar_Get("com_showfps", "0", 0);
 
 	cl_paused = Cvar_Get ("cl_paused", "0", CVAR_ROM);
 	sv_paused = Cvar_Get ("sv_paused", "0", CVAR_ROM);

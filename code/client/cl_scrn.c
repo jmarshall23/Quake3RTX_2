@@ -500,7 +500,10 @@ void SCR_DrawScreenField( stereoFrame_t stereoFrame ) {
 	}
 
 	// console draws next
-	Con_DrawConsole ();
+	//Con_DrawConsole ();
+
+	// ImGUI draws next. 
+	CL_RenderImGuiFrame();
 
 	// debug graph can be drawn on top of anything
 	if ( cl_debuggraph->integer || cl_timegraph->integer || cl_debugMove->integer ) {

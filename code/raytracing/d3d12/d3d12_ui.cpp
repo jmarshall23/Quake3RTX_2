@@ -156,6 +156,9 @@ void GL_InitUI(void) {
 
 		memcpy(ui_uniform_buffer->cpu_mapped_address, &projectionMatrix, sizeof(projectionMatrix));
 	}
+
+
+	CL_InitImGui(g_hwnd, m_device.Get(), simple_ui_desc_set[MAX_UI_PASSES-1]->dx_cbvsrvuav_heap);
 }
 
 /*
@@ -184,7 +187,7 @@ void GL_RenderUISurface(int numIndexes, drawVert_t *verts, int *indexes, const s
 		return;
 	}
 
-	if (numUsedRenderPasses >= MAX_UI_PASSES) {
+	if (numUsedRenderPasses >= MAX_UI_PASSES-1) {
 		return;
 	}
 
@@ -277,6 +280,10 @@ void GL_RenderUI(ID3D12GraphicsCommandList4* cmdList, ID3D12CommandAllocator* co
 		tr_cmd_bind_descriptor_sets(&cmd, uiRenderPasses[i].pipeline, uiRenderPasses[i].descriptorset);
 		tr_cmd_draw(&cmd, uiRenderPasses[i].numVertexes, uiRenderPasses[i].startVertex);
 	}
+
+	cmdList->SetDescriptorHeaps(1, &simple_ui_desc_set[MAX_UI_PASSES - 1]->dx_cbvsrvuav_heap);
+	CL_FinalRenderImGui(cmdList);
+
 	tr_cmd_end_render(&cmd);
 	//tr_cmd_render_target_transition(&cmd, uiRenderTarget, tr_texture_usage_color_attachment, tr_texture_usage_sampled_image);
 	tr_internal_dx_cmd_image_transition(&cmd, uiRenderTarget->color_attachments[0], tr_texture_usage_color_attachment, tr_texture_usage_sampled_image);

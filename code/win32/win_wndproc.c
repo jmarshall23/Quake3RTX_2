@@ -417,6 +417,15 @@ LONG WINAPI MainWndProc (
 			if (wParam & MK_MBUTTON)
 				temp |= 4;
 
+			if (uMsg == WM_LBUTTONDOWN)
+			{
+				CL_ImGuiMouseInput(qtrue, 0);
+			}
+			else if (uMsg == WM_LBUTTONUP)
+			{
+				CL_ImGuiMouseInput(qfalse, 0);
+			}
+
 			IN_MouseEvent (temp);
 		}
 		break;
@@ -438,11 +447,13 @@ LONG WINAPI MainWndProc (
 		}
 		// fall through
 	case WM_KEYDOWN:
+		CL_ImGuiKeyInput(qtrue, wParam);
 		Sys_QueEvent( g_wv.sysMsgTime, SE_KEY, MapKey( lParam ), qtrue, 0, NULL );
 		break;
 
 	case WM_SYSKEYUP:
 	case WM_KEYUP:
+		CL_ImGuiKeyInput(qfalse, wParam);
 		Sys_QueEvent( g_wv.sysMsgTime, SE_KEY, MapKey( lParam ), qfalse, 0, NULL );
 		break;
 

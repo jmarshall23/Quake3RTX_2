@@ -395,7 +395,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>shcore.lib;dxcompiler.lib;dxgi.lib;d3d12.lib;winmm.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../quake3.exe</OutputFile>
+      <OutputFile>../quake3rtx.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\Debug/quake3.pdb</ProgramDatabaseFile>
@@ -923,6 +923,7 @@
       <Optimization Condition="'$(Configuration)|$(Platform)'=='vector|Win32'">MaxSpeed</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='vector|x64'">MaxSpeed</Optimization>
     </ClCompile>
+    <ClCompile Include="client\cl_imgui.cpp" />
     <ClCompile Include="client\cl_input.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug TA DEMO|Win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug TA DEMO|x64'">Disabled</Optimization>
@@ -1259,6 +1260,12 @@
       <Optimization Condition="'$(Configuration)|$(Platform)'=='vector|Win32'">MaxSpeed</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='vector|x64'">MaxSpeed</Optimization>
     </ClCompile>
+    <ClCompile Include="imgui\imgui.cpp" />
+    <ClCompile Include="imgui\imgui_draw.cpp" />
+    <ClCompile Include="imgui\imgui_impl_dx12.cpp" />
+    <ClCompile Include="imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="imgui\imgui_tables.cpp" />
+    <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="qcommon\cmd.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug TA DEMO|Win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug TA DEMO|x64'">Disabled</Optimization>
@@ -2008,6 +2015,7 @@
     <ClInclude Include="cgame\cg_public.h" />
     <ClInclude Include="cgame\tr_types.h" />
     <ClInclude Include="client\client.h" />
+    <ClInclude Include="client\console.h" />
     <ClInclude Include="client\keys.h" />
     <ClInclude Include="client\snd_local.h" />
     <ClInclude Include="client\snd_public.h" />
@@ -2015,10 +2023,19 @@
     <ClInclude Include="game\g_public.h" />
     <ClInclude Include="game\q_shared.h" />
     <ClInclude Include="game\surfaceflags.h" />
+    <ClInclude Include="imgui\imconfig.h" />
+    <ClInclude Include="imgui\imgui.h" />
+    <ClInclude Include="imgui\imgui_impl_dx12.h" />
+    <ClInclude Include="imgui\imgui_impl_win32.h" />
+    <ClInclude Include="imgui\imgui_internal.h" />
+    <ClInclude Include="imgui\imstb_rectpack.h" />
+    <ClInclude Include="imgui\imstb_textedit.h" />
+    <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="qcommon\cm_local.h" />
     <ClInclude Include="qcommon\cm_patch.h" />
     <ClInclude Include="qcommon\cm_polylib.h" />
     <ClInclude Include="qcommon\cm_public.h" />
+    <ClInclude Include="qcommon\engine.hpp" />
     <ClInclude Include="qcommon\qcommon.h" />
     <ClInclude Include="qcommon\qfiles.h" />
     <ClInclude Include="qcommon\unzip.h" />

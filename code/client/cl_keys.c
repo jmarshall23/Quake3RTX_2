@@ -482,7 +482,9 @@ void Console_Key (int key) {
 	}
 
 	// enter finishes the line
+
 	if ( key == K_ENTER || key == K_KP_ENTER ) {
+#if 0
 		// if not in the game explicitly prepent a slash if needed
 		if ( cls.state != CA_ACTIVE && g_consoleField.buffer[0] != '\\' 
 			&& g_consoleField.buffer[0] != '/' ) {
@@ -522,6 +524,7 @@ void Console_Key (int key) {
 		if ( cls.state == CA_DISCONNECTED ) {
 			SCR_UpdateScreen ();	// force an update, because the command
 		}							// may take some time
+#endif
 		return;
 	}
 
@@ -1212,7 +1215,7 @@ void CL_CharEvent( int key ) {
 	// distribute the key down event to the apropriate handler
 	if ( cls.keyCatchers & KEYCATCH_CONSOLE )
 	{
-		Field_CharEvent( &g_consoleField, key );
+		//Field_CharEvent( &g_consoleField, key );
 	}
 	else if ( cls.keyCatchers & KEYCATCH_UI )
 	{
@@ -1224,7 +1227,7 @@ void CL_CharEvent( int key ) {
 	}
 	else if ( cls.state == CA_DISCONNECTED )
 	{
-		Field_CharEvent( &g_consoleField, key );
+	//	Field_CharEvent( &g_consoleField, key );
 	}
 }
 

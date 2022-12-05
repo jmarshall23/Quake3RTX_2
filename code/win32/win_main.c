@@ -162,6 +162,7 @@ Sys_Print
 ==============
 */
 void Sys_Print( const char *msg ) {
+	Imgui_Printf(msg);
 	Conbuf_AppendText( msg );
 	OutputDebugStringA(msg);
 }

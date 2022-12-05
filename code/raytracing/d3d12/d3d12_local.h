@@ -187,3 +187,4 @@ private:
 };
 
 extern float sky_map_x, sky_map_y, sky_map_w, sky_map_h;
+extern HWND g_hwnd;

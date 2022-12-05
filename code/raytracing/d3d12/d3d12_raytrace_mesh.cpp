@@ -634,7 +634,7 @@ static void LerpMeshVertexes(int materialInfo, md3Surface_t* surf, float backler
 void* GL_LoadMD3RaytracedMesh(md3Header_t* mod, int frame) {
 	dxrMesh_t* mesh = new dxrMesh_t();
 
-	mesh->alphaSurface = qtrue;
+	//mesh->alphaSurface = qtrue;
 
 	//mesh->meshId = dxrMeshList.size();
 	mesh->startSceneVertex = sceneVertexes.size();
