@@ -304,21 +304,28 @@ void GL_LoadBottomLevelAccelStruct(dxrMesh_t* mesh, msurface_t* surfaces, int nu
 		if (fa->shader->hasRaytracingReflection)
 			materialInfo = 5;
 
-		if (alphaSurfaces)
+		if (bModelIndex == -1)
 		{
-			if (!fa->shader->alphaSurface)
+			if (alphaSurfaces)
 			{
-				continue;
-			}
+				if (!fa->shader->alphaSurface)
+				{
+					continue;
+				}
 
-			mesh->alphaSurface = qtrue;
+				mesh->alphaSurface = qtrue;
+			}
+			else
+			{
+				if (fa->shader->alphaSurface)
+				{
+					continue;
+				}
+			}
 		}
 		else
 		{
-			if (fa->shader->alphaSurface)
-			{
-				continue;
-			}
+			mesh->alphaSurface = qtrue;
 		}
 
 		x = fa->shader->atlas_x;

@@ -141,8 +141,8 @@ void GL_CreateTopLevelAccelerationStructs(bool forceUpdate) {
 			trRefEntity_t* currententity = &tr.dxr_refdef.entities[i];
 			model_t* qmodel = tr.models[currententity->e.hModel];
 
-			if (currententity->e.renderfx & RF_THIRD_PERSON)
-				continue;
+			//if (currententity->e.renderfx & RF_THIRD_PERSON)
+			//	continue;
 
 			dxrMesh_t* mesh = (dxrMesh_t*)qmodel->dxrMesh[GL_GetCurrentFrame(currententity, currententity->e.frame)];
 			if (mesh == NULL)

@@ -1347,7 +1347,7 @@ static	void R_LoadSubmodels( lump_t *l ) {
 		out->firstSurface = s_worldData.surfaces + LittleLong( in->firstSurface );
 		out->numSurfaces = LittleLong( in->numSurfaces );
 
-		model->dxrMesh[0] = GL_LoadDXRMesh(out->firstSurface, out->numSurfaces, i + 2, qtrue);
+		model->dxrMesh[0] = GL_LoadDXRMesh(out->firstSurface, out->numSurfaces, i + 2, qfalse);
 	}
 }
 
