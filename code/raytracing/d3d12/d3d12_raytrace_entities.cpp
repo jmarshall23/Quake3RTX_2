@@ -74,6 +74,8 @@ void GL_CreateTopLevelAccelerationStructs(bool forceUpdate) {
 	// Add in the entities.
 	int numProcessedEntities = 1;
 
+	tr.renderStats.numRenderedEntities = tr.dxr_refdef.num_entities;
+
 	for (int i = 0; i < tr.dxr_refdef.num_entities; i++)
 	{
 		trRefEntity_t* currententity = &tr.dxr_refdef.entities[i];
@@ -93,6 +95,9 @@ void GL_CreateTopLevelAccelerationStructs(bool forceUpdate) {
 				numProcessedEntities++;
 				break;
 			case MOD_POLY:
+				create_entity_matrix(&currententity->dxrTransform[0], &currententity->e, qfalse);
+				numProcessedEntities++;
+				break;
 			case MOD_MESH:
 				create_entity_matrix(&currententity->dxrTransform[0], &currententity->e, qfalse);
 				numProcessedEntities++;

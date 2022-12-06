@@ -207,8 +207,16 @@ void CL_RenderImGuiFrame(void)
     if(com_showfps->integer > 0)
     {
         ImGui::SetNextWindowPos(ImVec2(cls.glconfig.vidWidth - 300, 50));
+        ImGui::SetNextWindowSize(ImVec2(200, 100));
         ImGui::Begin("Framerate");
         ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+        renderStats_t stats;
+        re.R_GetFrameStats(&stats);
+
+        ImGui::Text("NumRenderLights: %d", stats.numRenderLights);
+        ImGui::Text("NumRenderedEntities: %d", stats.numRenderedEntities);
+
         ImGui::End();
     }
 

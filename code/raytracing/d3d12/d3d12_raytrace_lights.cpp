@@ -284,5 +284,7 @@ void GL_BuildLightList(float x, float y, float z) {
 		numVisLights++;
 	}
 
+	tr.renderStats.numRenderLights = numVisLights;
+
 	numWorldLights = numStaticWorldLights;
 }

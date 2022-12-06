@@ -1075,5 +1075,6 @@ refexport_t *GetRefAPI ( int apiVersion, refimport_t *rimp ) {
 	re.R_FinishDXRLoading = RE_FinishDXRLoading;
 	re.ShutdownRaytracingMap = RE_ShutdownRaytracingMap;
 	re.RegisterCustomModel = RE_RegisterCustomModel;
+	re.R_GetFrameStats = RE_GetFrameStats;
 	return &re;
 }

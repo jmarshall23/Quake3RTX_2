@@ -102,6 +102,8 @@ typedef struct {
 	void     (*ShutdownRaytracingMap)(void);
 
 	qhandle_t(*RegisterCustomModel)(const char* name, qhandle_t shader, polyVert_t* verts, int numVertexes);
+
+	void	(*R_GetFrameStats) (renderStats_t* stats);
 } refexport_t;
 
 //

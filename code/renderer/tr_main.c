@@ -1533,5 +1533,6 @@ void R_RenderView (viewParms_t *parms) {
 	R_DebugGraphics();
 }
 
-
-
+void RE_GetFrameStats(renderStats_t* stats) {
+	*stats = tr.renderStats;
+}

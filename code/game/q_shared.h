@@ -1447,4 +1447,10 @@ typedef enum
 	LDAT_NOSCALE = 2
 } lightDistanceType_t;
 
+typedef struct
+{
+	int numRenderLights;
+	int numRenderedEntities;
+} renderStats_t;
+
 #endif	// __Q_SHARED_H

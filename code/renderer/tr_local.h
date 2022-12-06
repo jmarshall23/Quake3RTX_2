@@ -998,6 +998,8 @@ typedef struct {
 	float					sawToothTable[FUNCTABLE_SIZE];
 	float					inverseSawToothTable[FUNCTABLE_SIZE];
 	float					fogTable[FOG_TABLE_SIZE];
+
+	renderStats_t			renderStats;
 } trGlobals_t;
 
 extern backEndState_t	backEnd;
@@ -1218,6 +1220,8 @@ qhandle_t	RE_RegisterModel( const char *name );
 qhandle_t	RE_RegisterCustomModel(const char* name, qhandle_t shader, polyVert_t* verts, int numVertexes);
 qhandle_t	RE_RegisterSkin( const char *name );
 void		RE_Shutdown( qboolean destroyWindow );
+
+void		RE_GetFrameStats(renderStats_t* stats);
 
 qboolean	R_GetEntityToken( char *buffer, int size );
 
