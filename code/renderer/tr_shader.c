@@ -1382,11 +1382,11 @@ static void ParseSurfaceParm( char **text ) {
 		if ( !Q_stricmp( token, infoParms[i].name ) ) {
 			shader.surfaceFlags |= infoParms[i].surfaceFlags;
 			shader.contentFlags |= infoParms[i].contents;
-#if 0
-			if ( infoParms[i].clearSolid ) {
-				si->contents &= ~CONTENTS_SOLID;
+
+			if (shader.contentFlags & CONTENTS_TRANSLUCENT)
+			{
+				shader.alphaSurface = qtrue;
 			}
-#endif
 			break;
 		}
 	}

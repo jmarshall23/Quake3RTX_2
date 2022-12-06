@@ -1678,7 +1678,7 @@ void GL_EndRendering(void);
 
 void GL_InitMegaTextures(void);
 void GL_Init(HWND hwnd, HINSTANCE hinstance, int width, int height);
-void* GL_LoadDXRMesh(msurface_t* surfaces, int numSurfaces, int bModelIndex);
+void* GL_LoadDXRMesh(msurface_t* surfaces, int numSurfaces, int bModelIndex, qboolean alphaSurfaces);
 
 void* GL_LoadMD3RaytracedMesh(md3Header_t* mod, int frame);
 void* GL_LoadPolyRaytracedMesh(shader_t* shader, polyVert_t* verts, int numVertexes);

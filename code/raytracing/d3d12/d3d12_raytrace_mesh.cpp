@@ -256,7 +256,7 @@ void GL_RaytraceSurfaceGrid(dxrMesh_t* mesh, msurface_t* fa, srfGridMesh_t* cv) 
 }
 
 
-void GL_LoadBottomLevelAccelStruct(dxrMesh_t* mesh, msurface_t* surfaces, int numSurfaces, int bModelIndex) {
+void GL_LoadBottomLevelAccelStruct(dxrMesh_t* mesh, msurface_t* surfaces, int numSurfaces, int bModelIndex, qboolean alphaSurfaces) {
 	mesh->startSceneVertex = sceneVertexes.size();
 
 	for (int i = 0; i < numSurfaces; i++)
@@ -297,21 +297,29 @@ void GL_LoadBottomLevelAccelStruct(dxrMesh_t* mesh, msurface_t* surfaces, int nu
 			continue;
 		}
 
-		if (strstr(fa->shader->name, "flame")) {
-			continue;
-		}
-
 		if (fa->shader->surfaceLightRadius > 0) {
 			materialInfo = 2;
-		}
-
-		if (strstr(fa->shader->name, "sfx/beam")) {
-			continue;
 		}
 
 		if (fa->shader->hasRaytracingReflection)
 			materialInfo = 5;
 
+		if (alphaSurfaces)
+		{
+			if (!fa->shader->alphaSurface)
+			{
+				continue;
+			}
+
+			mesh->alphaSurface = qtrue;
+		}
+		else
+		{
+			if (fa->shader->alphaSurface)
+			{
+				continue;
+			}
+		}
 
 		x = fa->shader->atlas_x;
 		y = fa->shader->atlas_y;
@@ -415,12 +423,12 @@ void GL_LoadBottomLevelAccelStruct(dxrMesh_t* mesh, msurface_t* surfaces, int nu
 	}	
 }
 
-void *GL_LoadDXRMesh(msurface_t *surfaces, int numSurfaces, int bModelIndex)  {
+void *GL_LoadDXRMesh(msurface_t *surfaces, int numSurfaces, int bModelIndex, qboolean alphaSurfaces)  {
 	dxrMesh_t* mesh = new dxrMesh_t();
 	
 	//mesh->meshId = dxrMeshList.size();
 	
-	GL_LoadBottomLevelAccelStruct(mesh, surfaces, numSurfaces, bModelIndex);
+	GL_LoadBottomLevelAccelStruct(mesh, surfaces, numSurfaces, bModelIndex, alphaSurfaces);
 
 	dxrMeshList.push_back(mesh);
 

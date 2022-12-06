@@ -129,6 +129,13 @@ void GL_CreateTopLevelAccelerationStructs(bool forceUpdate) {
 			m_topLevelASGenerator.AddInstance(dxrMeshList[0]->buffers.pResult.Get(), worldmatrix, 0, 0xFF);
 		}
 
+		{
+			// World matrix is always a identity.
+			static DirectX::XMMATRIX worldmatrix = DirectX::XMMatrixIdentity();
+			m_topLevelASGenerator.AddInstance(dxrMeshList[1]->buffers.pResult.Get(), worldmatrix, 1, 0x20);
+			meshInstanceData[1].startVertex = dxrMeshList[1]->startSceneVertex;
+		}
+
 		for (int i = 0; i < tr.dxr_refdef.num_entities; i++)
 		{
 			trRefEntity_t* currententity = &tr.dxr_refdef.entities[i];
@@ -141,7 +148,7 @@ void GL_CreateTopLevelAccelerationStructs(bool forceUpdate) {
 			if (mesh == NULL)
 				continue;
 
-			meshInstanceData[i + 1].startVertex = mesh->startSceneVertex;
+			meshInstanceData[i + 2].startVertex = mesh->startSceneVertex;
 
 			switch (qmodel->type)
 			{
@@ -150,7 +157,7 @@ void GL_CreateTopLevelAccelerationStructs(bool forceUpdate) {
 			case MOD_MESH:
 				//if (!currententity->skipShadows)
 				{
-					m_topLevelASGenerator.AddInstance(mesh->buffers.pResult.Get(), (DirectX::XMMATRIX&)currententity->dxrTransform, i + 1, 0xFF);
+					m_topLevelASGenerator.AddInstance(mesh->buffers.pResult.Get(), (DirectX::XMMATRIX&)currententity->dxrTransform, i + 2, 0xFF);
 				}
 				//else
 				//{

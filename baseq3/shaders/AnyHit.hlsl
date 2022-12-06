@@ -42,10 +42,9 @@ float2 CalcUV(int vertId, Attributes attrib)
 	float4 megaColor = MegaTexture.Load(int3(u * 16384, v * 16384, 0)); //normalize(BTriVertex[vertId + 0].vertex) * 4;
 	if(megaColor.w != 1)
 	{
-		payload.colorAndDistance += float4(megaColor.xyz, 1.0) * megaColor.w;
+		payload.colorAndDistance += megaColor * megaColor.w;
 		IgnoreHit();
 		return;
 	}
-	
-	AcceptHitAndEndSearch();
+
 }

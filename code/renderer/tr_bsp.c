@@ -1347,7 +1347,7 @@ static	void R_LoadSubmodels( lump_t *l ) {
 		out->firstSurface = s_worldData.surfaces + LittleLong( in->firstSurface );
 		out->numSurfaces = LittleLong( in->numSurfaces );
 
-		model->dxrMesh[0] = GL_LoadDXRMesh(out->firstSurface, out->numSurfaces, i + 2);
+		model->dxrMesh[0] = GL_LoadDXRMesh(out->firstSurface, out->numSurfaces, i + 2, qtrue);
 	}
 }
 
@@ -1874,7 +1874,8 @@ void RE_LoadWorldMap( const char *name ) {
 
 	s_worldData.dataSize = (byte *)ri.Hunk_Alloc(0, h_low) - startMarker;
 
-	GL_LoadDXRMesh(s_worldData.surfaces, s_worldData.numsurfaces, -1);
+	GL_LoadDXRMesh(s_worldData.surfaces, s_worldData.numsurfaces, -1, qfalse);
+	GL_LoadDXRMesh(s_worldData.surfaces, s_worldData.numsurfaces, -1, qtrue);
 
 	GL_SetNumMapLights();
 
