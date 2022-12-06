@@ -248,7 +248,7 @@ void CL_RenderImGuiFrame(void)
         ImGui::SetItemDefaultFocus();
         if (ImGui::InputText("Input", &console_buffer[0], sizeof(console_buffer), ImGuiInputTextFlags_EnterReturnsTrue))
         {
-            Cbuf_AddText(console_buffer+1);
+            Cbuf_AddText(console_buffer);
             Cbuf_AddText("\n");
             console_buffer[0] = 0;
         }       
