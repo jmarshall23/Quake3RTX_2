@@ -520,11 +520,11 @@ int sideOfPlane(float3 p, float3 pc, float3 pn){
 		}
 	}
 
-	ndotl += 0.01;
+	ndotl += 0.02;
   }
   else
   {
-	ndotl = float3(1, 1, 1) / 3.5;
+	ndotl = float3(1, 1, 1) / 3.0; // This needs to match blur.hlsl!!
 	emissive = 1;
   }  
 
