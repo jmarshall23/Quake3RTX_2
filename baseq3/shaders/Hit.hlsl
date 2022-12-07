@@ -24,7 +24,7 @@ cbuffer CameraParams : register(b0)
   float4x4 projectionI;
 }
 
-#define MAX_DRAW_LIGHTS 300
+#define MAX_DRAW_LIGHTS 600
 
 StructuredBuffer<STriVertex> BTriVertex : register(t0);
 Texture2D<float4> MegaTexture : register(t1);
@@ -177,7 +177,7 @@ float3 FireSecondRay(float3 worldOrigin, float distance, float3 normal)
      	// Acceleration structure
      	SceneBVH,
      	// Flags can be used to specify the behavior upon hitting a surface
-     	RAY_FLAG_NONE,
+		 RAY_FLAG_CULL_NON_OPAQUE,
      	// Instance inclusion mask, which can be used to mask out some geometry to
      	// this ray by and-ing the mask with a geometry mask. The 0xFF flag then
      	// indicates no geometry will be masked
@@ -490,11 +490,14 @@ int sideOfPlane(float3 p, float3 pc, float3 pn){
 			
 			float falloff = 0;
 
-			float photons = (plane_info.x * 0.125) + (-lightInfo[i].origin_radius.w * 0.25);
+			float photons = (plane_info.x * 0.5) + (-lightInfo[i].origin_radius.w * 0.25);
+
 			falloff = (photons / (lightDistance * lightDistance));
 			falloff = falloff - 0.01;
 
-			if(falloff > 0)
+			bool isBackFacing = dot(normal, normalize(centerLightDir)) > -0.001f;
+
+			if(falloff > 0 && isBackFacing)
 			{
 				falloff += 0.01;
 

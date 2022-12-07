@@ -4,8 +4,8 @@
 #include "d3d12_local.h"
 #include "../math/vectormath.h"
 
-#define MAX_DRAW_LIGHTS 300
-#define MAX_WORLD_LIGHTS 512
+#define MAX_DRAW_LIGHTS 600
+#define MAX_WORLD_LIGHTS MAX_DRAW_LIGHTS
 
 struct glLight_t {
 	vec4_t origin_radius;
@@ -181,7 +181,7 @@ void GL_RegisterWorldAreaLight(vec4_t plane, vec3_t mins, vec3_t maxs, int light
 	// Quake sub divides geometry(lovely) so to hack around that don't add any area lights that are near already registered area lights!
 	for (int i = 0; i < numWorldLights; i++) {
 		float dist = Distance(light.origin_radius, worldLights[i].origin_radius);
-		if (dist < 75)
+		if (dist < 15)
 			return;
 	}
 
@@ -232,7 +232,7 @@ void GL_BuildLightList(float x, float y, float z) {
 		ent->distance = Distance(ent->origin_radius, viewpos);
 	}
 	
-	qsort(worldLightsSorted, numWorldLights, sizeof(glLight_t), lightSort);
+	//qsort(worldLightsSorted, numWorldLights, sizeof(glLight_t), lightSort);
 
 	for(int i = 0; i < numWorldLights; i++) {
 		if(numVisLights >= MAX_DRAW_LIGHTS) {
