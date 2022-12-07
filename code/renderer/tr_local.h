@@ -361,6 +361,15 @@ typedef struct {
 	float	depthForOpaque;
 } fogParms_t;
 
+typedef struct {
+	qboolean hasSun;
+	float red;
+	float green;
+	float blue;
+	float intensity;
+	float degrees;
+	float elevation;
+} sunEmitInfo_t;
 
 typedef struct shader_s {
 	char		name[MAX_QPATH];		// game path, including extension
@@ -424,6 +433,8 @@ typedef struct shader_s {
 	void		(*optimalStageIteratorFunc)( void );
 
 	int surfaceLightRadius;
+
+	sunEmitInfo_t sunInfo;
 
   float clampTime;                                  // time this shader is clamped to
   float timeOffset;                                 // current time offset for this shader

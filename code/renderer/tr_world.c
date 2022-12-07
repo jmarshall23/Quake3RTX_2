@@ -382,9 +382,18 @@ static void R_AddRaytacedWorldSurface(msurface_t* surface)
 	if (lightRange == 0)
 		return;
 
-	lightColor[0] = surface->shader->shaderAverageColor[0] / 255.0f;
-	lightColor[1] = surface->shader->shaderAverageColor[1] / 255.0f;
-	lightColor[2] = surface->shader->shaderAverageColor[2] / 255.0f;
+	if (surface->shader->sunInfo.hasSun)
+	{
+		lightColor[0] = surface->shader->sunInfo.red * 0.085f;
+		lightColor[1] = surface->shader->sunInfo.green * 0.085f;
+		lightColor[2] = surface->shader->sunInfo.blue * 0.085f;
+	}
+	else
+	{
+		lightColor[0] = surface->shader->shaderAverageColor[0] / 255.0f;
+		lightColor[1] = surface->shader->shaderAverageColor[1] / 255.0f;
+		lightColor[2] = surface->shader->shaderAverageColor[2] / 255.0f;
+	}
 
 	srfTriangles_t* tri = (srfTriangles_t*)surface->data;
 	if (tri == NULL) {

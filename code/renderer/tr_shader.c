@@ -1444,6 +1444,19 @@ static qboolean ParseShader( char **text )
 		else if ( !Q_stricmpn( token, "qer", 3 ) ) {
 			SkipRestOfLine( text );
 			continue;
+		}		
+		else if (!Q_stricmp(token, "q3map_sun"))
+		{
+			// red green blue intensity degrees elevation
+			// 1 .77 .77 80 315 70
+			shader.sunInfo.hasSun = qtrue;
+			shader.sunInfo.red = atof(COM_ParseExt(text, qfalse));
+			shader.sunInfo.green = atof(COM_ParseExt(text, qfalse));
+			shader.sunInfo.blue = atof(COM_ParseExt(text, qfalse));
+			shader.sunInfo.intensity = atof(COM_ParseExt(text, qfalse));
+			shader.sunInfo.degrees = atof(COM_ParseExt(text, qfalse));
+			shader.sunInfo.elevation = atof(COM_ParseExt(text, qfalse));
+			continue;
 		}
 		else if (!Q_stricmp(token, "q3map_surfacelight"))
 		{

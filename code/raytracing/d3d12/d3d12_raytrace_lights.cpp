@@ -236,7 +236,7 @@ void GL_BuildLightList(float x, float y, float z) {
 
 	for(int i = 0; i < numWorldLights; i++) {
 		if(numVisLights >= MAX_DRAW_LIGHTS) {
-			Com_Printf("MAX_DRAW_LIGHTS!\n");
+		//	Com_Printf("MAX_DRAW_LIGHTS!\n");
 			break;
 		}
 
