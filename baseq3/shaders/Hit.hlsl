@@ -528,21 +528,6 @@ int sideOfPlane(float3 p, float3 pc, float3 pn){
 	emissive = 1;
   }  
 
-  if(BTriVertex[vertId + 0].st.z >= 0)
-  {
-	for(int i = 4; i < 9; i++)
-	{
-		uint2 pixIdx = DispatchRaysIndex().xy;
-		uint randSeed = initRand( pixIdx.x + pixIdx.y * 1920, 0 );
-		int r = length(float3(worldOrigin.x + worldOrigin.y, worldOrigin.x + worldOrigin.y, worldOrigin.x + worldOrigin.y)) * i;
-		float3 worldDir = getCosHemisphereSample(r, normal);
-		if(IsLightShadowed(worldOrigin + (normal * 10), worldDir, 5 * ( i * 0.1), normal)) {
-			ndotl *= 0.1;
-		}
-	}
-  }
-
-  
 
 
 	// Fire the secondary bounce
