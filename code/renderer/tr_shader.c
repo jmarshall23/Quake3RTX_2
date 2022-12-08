@@ -584,7 +584,7 @@ static void ParseTexMod( char *_text, shaderStage_t *stage )
 ParseStage
 ===================
 */
-static qboolean ParseStage( shaderStage_t *stage, char **text )
+static qboolean ParseStage( shaderStage_t *stage, char **text, int stageId )
 {
 	char *token;
 	int depthMaskBits = GLS_DEPTHMASK_TRUE, blendSrcBits = 0, blendDstBits = 0, atestBits = 0, depthFuncBits = 0;
@@ -643,6 +643,12 @@ static qboolean ParseStage( shaderStage_t *stage, char **text )
 					ri.Printf( PRINT_WARNING, "WARNING: R_FindImageFile could not find '%s' in shader '%s'\n", token, shader.name );
 					return qfalse;
 				}
+
+
+				//if (stage->bundle[0].image[0]->hasAlphaChannel)
+				//{
+				//	shader.alphaSurface = qtrue;
+				//}
 			}
 		}
 		//
@@ -1432,7 +1438,7 @@ static qboolean ParseShader( char **text )
 		// stage definition
 		else if ( token[0] == '{' )
 		{
-			if ( !ParseStage( &stages[s], text ) )
+			if ( !ParseStage( &stages[s], text, s ) )
 			{
 				return qfalse;
 			}

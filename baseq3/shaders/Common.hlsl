@@ -35,3 +35,9 @@ struct SInstanceProperties
 {
 	int startVertex;
 };
+
+// Ray payload for the shadow rays
+struct ShadowHitInfo {
+	bool isHit;
+	float4 vertinfo;
+};

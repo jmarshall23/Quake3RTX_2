@@ -112,6 +112,7 @@ typedef struct image_s {
 	byte*		cpu_image_buffer;
 
 	int			imageAverageColor[3];
+	qboolean	hasAlphaChannel;
 
 	struct image_s*	next;
 } image_t;

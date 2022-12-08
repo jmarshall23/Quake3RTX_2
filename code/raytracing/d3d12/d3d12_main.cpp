@@ -37,6 +37,7 @@ ComPtr<IDxcBlob> m_missLibrary;
 ComPtr<IDxcBlob> m_shadowLibrary;
 ComPtr<IDxcBlob> m_secondHitLibrary;
 ComPtr<IDxcBlob> m_anyHitLibrary;
+ComPtr<IDxcBlob> m_shadowAnyHitLibrary;
 
 ComPtr<ID3D12RootSignature> m_rayGenSignature;
 ComPtr<ID3D12RootSignature> m_hitSignature;
@@ -179,6 +180,8 @@ void GL_InitRaytracing(int width, int height) {
 	m_missLibrary = nv_helpers_dx12::CompileShaderLibrary(L"baseq3/shaders/Miss.hlsl");
 	m_hitLibrary = nv_helpers_dx12::CompileShaderLibrary(L"baseq3/shaders/Hit.hlsl");
 	m_anyHitLibrary = nv_helpers_dx12::CompileShaderLibrary(L"baseq3/shaders/AnyHit.hlsl");
+	m_shadowAnyHitLibrary = nv_helpers_dx12::CompileShaderLibrary(L"baseq3/shaders/ShadowAnyHit.hlsl");
+
 	// #DXR Extra - Another ray type
 	m_shadowLibrary = nv_helpers_dx12::CompileShaderLibrary(L"baseq3/shaders/ShadowRay.hlsl");
 	pipeline.AddLibrary(m_shadowLibrary.Get(),{ L"ShadowClosestHit", L"ShadowMiss" });
@@ -195,6 +198,7 @@ void GL_InitRaytracing(int width, int height) {
 	pipeline.AddLibrary(m_missLibrary.Get(), { L"Miss" });
 	pipeline.AddLibrary(m_hitLibrary.Get(), { L"ClosestHit" });
 	pipeline.AddLibrary(m_anyHitLibrary.Get(), { L"InteractionAnyHit" });
+	pipeline.AddLibrary(m_shadowAnyHitLibrary.Get(), { L"ShadowAnyHit" });
 
 	// 3 different shaders can be invoked to obtain an intersection: an
 	// intersection shader is called
@@ -215,7 +219,7 @@ void GL_InitRaytracing(int width, int height) {
 	// colors
 	pipeline.AddHitGroup(L"HitGroup", L"ClosestHit", L"InteractionAnyHit");
 	// Hit group for all geometry when hit by a shadow ray
-	pipeline.AddHitGroup(L"ShadowHitGroup", L"ShadowClosestHit");
+	pipeline.AddHitGroup(L"ShadowHitGroup", L"ShadowClosestHit", L"ShadowAnyHit");
 	pipeline.AddHitGroup(L"SecondHitGroup", L"SecondClosestHit"	);
 
 	// The following section associates the root signature to each shader. Note
@@ -790,7 +794,7 @@ void GL_FinishDXRLoading(void)
 
 		// Adding the triangle hit shader
 		m_sbtHelper.AddHitGroup(L"HitGroup", { (void*)m_vertexBuffer->GetGPUVirtualAddress(), (UINT64 *) m_srvUavHeap->GetGPUDescriptorHandleForHeapStart().ptr });
-		m_sbtHelper.AddHitGroup(L"ShadowHitGroup", {});
+		m_sbtHelper.AddHitGroup(L"ShadowHitGroup", { (void*)m_vertexBuffer->GetGPUVirtualAddress(), (UINT64*)m_srvUavHeap->GetGPUDescriptorHandleForHeapStart().ptr });
 		m_sbtHelper.AddHitGroup(L"SecondHitGroup", { heapPointer });
 
 		// Compute the size of the SBT given the number of shaders and their
