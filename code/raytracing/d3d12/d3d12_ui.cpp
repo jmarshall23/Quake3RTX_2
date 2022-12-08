@@ -308,12 +308,9 @@ void GL_Upload32(int textureId, unsigned* data, int width, int height, int mipma
 	textures[textureId].width = width;
 	textures[textureId].height = height;
 
-	if (textures[textureId].texture != NULL) {
-		//tr_destroy_texture(renderer, textures[textureId].texture);
-		//textures[textureId].texture = NULL;
-		return;
+	if (textures[textureId].texture == NULL) {
+		tr_create_texture_2d(renderer, width, height, tr_sample_count_1, tr_format_r8g8b8a8_unorm, 1, NULL, false, tr_texture_usage_sampled_image | tr_texture_usage_storage_image, &textures[textureId].texture);
 	}
-
-	tr_create_texture_2d(renderer, width, height, tr_sample_count_1, tr_format_r8g8b8a8_unorm, 1, NULL, false, tr_texture_usage_sampled_image | tr_texture_usage_storage_image, &textures[textureId].texture);
+	
 	tr_util_update_texture_uint8(renderer->graphics_queue, width, height, width * 4, (byte*)data, 4, textures[textureId].texture, NULL, NULL);
 }

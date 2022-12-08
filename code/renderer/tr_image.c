@@ -594,23 +594,36 @@ static void CalculateMidColorsForImage(byte* buffer, int width, int height, int 
 	memset(coloravg, 0, sizeof(coloravg));
 	*hasAlphaChannel = qfalse;
 
+	int numPixels = 0;
+
 	for (int i = 0; i < width * height; i++)
 	{
-		coloravg[0] += buffer[0];
-		coloravg[1] += buffer[1];
-		coloravg[2] += buffer[2];
-
 		if (buffer[3] != 255)
 		{
 			*hasAlphaChannel = qtrue;
+		}
+		else
+		{
+			coloravg[0] += buffer[0];
+			coloravg[1] += buffer[1];
+			coloravg[2] += buffer[2];
+			numPixels++;
 		}
 
 		buffer += 4;
 	}
 
-	coloravg[0] /= width * height;
-	coloravg[1] /= width * height;
-	coloravg[2] /= width * height;
+	if (numPixels == 0)
+	{
+		coloravg[0] = 0;
+		coloravg[1] = 0;
+		coloravg[2] = 0;
+		return;
+	}
+
+	coloravg[0] /= numPixels;
+	coloravg[1] /= numPixels;
+	coloravg[2] /= numPixels;
 }
 
 /*
