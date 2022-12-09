@@ -1,0 +1,11 @@
+{
+"basepath" "H:/projects/Quake3/baseq3"
+"rshcmd" ""
+"remotebasepath" "H:/projects/Quake3/baseq3"
+"entitypath" "H:/projects/Quake3/baseq3/scripts"
+"texturepath" "H:/projects/Quake3/baseq3/textures"
+"autosave" "H:/projects/Quake3/baseq3/maps/autosave.map"
+"mapspath" "H:/projects/Quake3/baseq3/maps"
+
+"bsp_BSP" "H:\projects\Quake3\bin_nt\q3map3.exe $ && H:\projects\Quake3\bin_nt\q3map3.exe -vis -fast $"
+}
